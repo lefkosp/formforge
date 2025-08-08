@@ -1,103 +1,182 @@
-import Image from "next/image";
+"use client";
+
+import { DocsLayout } from "@/components/docs/layout";
+import { CodePreview } from "@/components/docs/code-preview";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, FormProvider } from "react-hook-form";
+import { z } from "zod";
+import InputField from "@/components/ui/InputField";
+
+const formSchema = z.object({
+  email: z.string().email({ message: "Invalid email address." }),
+  password: z
+    .string()
+    .min(8, { message: "Password must be at least 8 characters." }),
+});
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const methods = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const onSubmit = (data: z.infer<typeof formSchema>) => {
+    console.log("Form data:", data);
+  };
+
+  const exampleComponent = (
+    <FormProvider {...methods}>
+      <form
+        onSubmit={methods.handleSubmit(onSubmit)}
+        className="space-y-4 w-80"
+      >
+        <InputField
+          name="email"
+          label="Email"
+          type="email"
+          placeholder="you@example.com"
+        />
+        <InputField
+          name="password"
+          label="Password"
+          type="password"
+          placeholder="••••••••"
+        />
+        <button
+          type="submit"
+          className="form-button form-button-primary w-full"
+        >
+          Submit
+        </button>
+      </form>
+    </FormProvider>
+  );
+
+  const tsxCode = `import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, FormProvider } from "react-hook-form";
+import { z } from "zod";
+import InputField from "@/components/ui/InputField";
+
+const formSchema = z.object({
+  email: z.string().email({ message: "Invalid email address." }),
+  password: z.string().min(8, { message: "Password must be at least 8 characters." }),
+});
+
+export default function ExampleForm() {
+  const methods = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  return (
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-4">
+        <InputField
+          name="email"
+          label="Email"
+          type="email"
+          placeholder="you@example.com"
+        />
+        <InputField
+          name="password"
+          label="Password"
+          type="password"
+          placeholder="••••••••"
+        />
+        <button type="submit" className="form-button form-button-primary">
+          Submit
+        </button>
+      </form>
+    </FormProvider>
+  );
+}`;
+
+  const zodSchema = `import { z } from "zod";
+
+const formSchema = z.object({
+  email: z.string().email({ message: "Invalid email address." }),
+  password: z.string().min(8, { message: "Password must be at least 8 characters." }),
+});
+
+type FormData = z.infer<typeof formSchema>;`;
+
+  return (
+    <DocsLayout>
+      <div className="space-y-8">
+        {/* Header */}
+        <div className="space-y-2">
+          <h1 className="text-3xl font-bold tracking-tight">FormForge</h1>
+          <p className="text-lg text-muted-foreground">
+            Beautiful, accessible forms for modern web apps
+          </p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+
+        {/* Description */}
+        <div className="prose prose-gray dark:prose-invert max-w-none">
+          <p>
+            FormForge is a comprehensive form library built for React
+            applications that combines the power of React Hook Form with Zod
+            validation to create type-safe, accessible, and beautiful forms with
+            minimal boilerplate.
+          </p>
+
+          <h2>Key Features</h2>
+          <ul>
+            <li>
+              <strong>Type Safety:</strong> Full TypeScript support with Zod
+              schema validation
+            </li>
+            <li>
+              <strong>Accessibility:</strong> Built-in ARIA attributes and
+              keyboard navigation
+            </li>
+            <li>
+              <strong>Customizable:</strong> Flexible theming with Tailwind CSS
+            </li>
+            <li>
+              <strong>Developer Experience:</strong> Minimal setup, maximum
+              productivity
+            </li>
+            <li>
+              <strong>Performance:</strong> Optimized rendering with React Hook
+              Form
+            </li>
+          </ul>
+
+          <h2>Quick Start</h2>
+          <p>Here's a simple example of how to create a form with FormForge:</p>
+        </div>
+
+        {/* Code Preview */}
+        <CodePreview
+          component={exampleComponent}
+          tsxCode={tsxCode}
+          zodSchema={zodSchema}
+        />
+
+        {/* Getting Started */}
+        <div className="prose prose-gray dark:prose-invert max-w-none">
+          <h2>Installation</h2>
+          <pre className="bg-muted p-4 rounded-lg">
+            <code>
+              npm install formforge react-hook-form @hookform/resolvers zod
+            </code>
+          </pre>
+
+          <h2>Next Steps</h2>
+          <p>
+            Explore the components in the sidebar to see all available form
+            fields and their configurations. Each component includes live
+            examples, code snippets, and detailed documentation.
+          </p>
+        </div>
+      </div>
+    </DocsLayout>
   );
 }

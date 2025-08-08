@@ -1,7 +1,13 @@
-import type { NextConfig } from "next";
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  webpack: (config: any) => {
+    config.module.rules.push({
+      resourceQuery: /raw/, // *.ts?raw
+      type: "asset/source",
+    });
 
-const nextConfig: NextConfig = {
-  /* config options here */
+    return config;
+  },
 };
 
 export default nextConfig;
