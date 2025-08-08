@@ -178,7 +178,7 @@
   }
 
   .form-button-primary:hover {
-    background-color: var(--color-primary) / 0.9;
+    background-color: color-mix(in oklab, var(--color-primary) 92%, black 8%);
   }
 
   .form-button-secondary {
@@ -189,7 +189,7 @@
   }
 
   .form-button-secondary:hover {
-    background-color: var(--color-secondary) / 0.8;
+    background-color: color-mix(in oklab, var(--color-secondary) 90%, black 10%);
   }
 
   /* Gradient accents for headers */

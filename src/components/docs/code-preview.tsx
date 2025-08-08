@@ -28,31 +28,47 @@ export function CodePreview({
   playground,
 }: CodePreviewProps) {
   const [copied, setCopied] = useState<string | null>(null);
-  const [pgValues, setPgValues] = useState<Record<string, unknown>>(playground?.initialValues ?? {});
+  const [pgValues, setPgValues] = useState<Record<string, unknown>>(
+    playground?.initialValues ?? {}
+  );
 
-  const renderers: Record<string, {
-    render: (values: Record<string, unknown>) => React.ReactNode;
-    generate: (values: Record<string, unknown>, code: string) => string;
-  }> = {
+  const renderers: Record<
+    string,
+    {
+      render: (values: Record<string, unknown>) => React.ReactNode;
+      generate: (values: Record<string, unknown>, code: string) => string;
+    }
+  > = {
     "input-field": {
       render: (v) => (
         <div className="w-80">
           <div className="space-y-2">
             <label className="form-label">{String(v.label ?? "Label")}</label>
-            <input className="form-input" placeholder={String(v.placeholder ?? "")} type={String(v.type ?? "text")} />
+            <input
+              className="form-input"
+              placeholder={String(v.placeholder ?? "")}
+              type={String(v.type ?? "text")}
+            />
           </div>
         </div>
       ),
       generate: (v, code) =>
         code
           .replace(/label=\".*?\"/, `label=\"${v.label ?? "Label"}\"`)
-          .replace(/placeholder=\".*?\"/, `placeholder=\"${v.placeholder ?? ""}\"`)
+          .replace(
+            /placeholder=\".*?\"/,
+            `placeholder=\"${v.placeholder ?? ""}\"`
+          )
           .replace(/type=\".*?\"/, `type=\"${v.type ?? "text"}\"`),
     },
   };
 
-  const rendered = playground ? (renderers[playground.renderId]?.render(pgValues) ?? component) : component;
-  const liveTsx = playground ? (renderers[playground.renderId]?.generate(pgValues, tsxCode) ?? tsxCode) : tsxCode;
+  const rendered = playground
+    ? renderers[playground.renderId]?.render(pgValues) ?? component
+    : component;
+  const liveTsx = playground
+    ? renderers[playground.renderId]?.generate(pgValues, tsxCode) ?? tsxCode
+    : tsxCode;
   const highlightedTsx = highlightTsx(liveTsx);
 
   const copyToClipboard = async (text: string, type: string) => {
@@ -109,7 +125,10 @@ export function CodePreview({
                     )}
                   </Button>
                   <pre className="overflow-x-auto p-4 text-sm hover:shadow-[0_0_0_1px_var(--accent-soft),0_0_32px_-10px_var(--accent)] bg-gradient-to-br from-[var(--accent-soft)]/40 via-card to-[var(--accent-soft)]/0 transition-shadow">
-                    <code className="text-muted-foreground" dangerouslySetInnerHTML={{ __html: highlightedTsx }} />
+                    <code
+                      className="text-muted-foreground"
+                      dangerouslySetInnerHTML={{ __html: highlightedTsx }}
+                    />
                   </pre>
                 </div>
               </TabsContent>
