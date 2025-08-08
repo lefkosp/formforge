@@ -27,22 +27,33 @@ const RadioGroupField = ({ name, label, options, className }: RadioGroupFieldPro
   return (
     <div className={cn("space-y-2", className)}>
       <Label htmlFor={name} className={cn(error && "text-destructive")}>{label}</Label>
-      <div className={cn("space-y-2", error && "[&_*]:data-[state=unchecked]:border-destructive/50")}> 
+      <div className="flex flex-wrap gap-3"> 
         {options.map((opt) => (
-          <label key={opt.value} className="flex items-center space-x-2 text-sm">
-            <input
-              type="radio"
-              value={opt.value}
-
-              className={cn("h-4 w-4", error && "ring-1 ring-destructive")}
-              {...register(name)}
-            />
-            <span>{opt.label}</span>
+          <label key={opt.value} className="group inline-flex items-center gap-2 text-sm cursor-pointer">
+            <span className="relative inline-flex items-center justify-center">
+              <input
+                type="radio"
+                value={opt.value}
+                {...register(name)}
+                className="peer absolute inset-0 size-5 opacity-0 cursor-pointer"
+              />
+              <span
+                className={cn(
+                  "inline-flex size-5 items-center justify-center rounded-full border border-input bg-background shadow-sm transition-all duration-200 ease-in-out",
+                  "group-hover:ring-2 group-hover:ring-accent",
+                  "peer-focus-visible:ring-2 peer-focus-visible:ring-accent",
+                  error && "ring-destructive"
+                )}
+              >
+                <span className="size-2.5 rounded-full bg-accent opacity-0 transition-opacity duration-150 peer-checked:opacity-100" />
+              </span>
+            </span>
+            <span className={cn("leading-none", error && "text-destructive")}>{opt.label}</span>
           </label>
         ))}
       </div>
       {error && (
-        <p className="text-sm text-destructive animate-fade-in">{error.message?.toString()}</p>
+        <p className="mt-1 text-xs text-destructive animate-fade-in">{error.message?.toString()}</p>
       )}
     </div>
   );

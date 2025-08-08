@@ -5,7 +5,9 @@ import { useForm, FormProvider } from "react-hook-form";
 import { z } from "zod";
 import { useState } from "react";
 import InputField from "@/components/ui/InputField";
+import FormStepper from "@/components/ui/FormStepper";
 import { schema } from "./form-stepper-schema";
+import TextareaField from "@/components/ui/TextareaField";
 
 export function FormStepperBasicExample() {
   const [step, setStep] = useState(0);
@@ -40,6 +42,7 @@ export function FormStepperBasicExample() {
         className="space-y-4 w-[28rem]"
       >
         <div className="flex items-center justify-between text-sm text-muted-foreground">
+          <FormStepper steps={[{ title: "Account" }, { title: "Profile" }]} active={step} />
           <span>Step {step + 1} of 2</span>
         </div>
 
@@ -52,12 +55,7 @@ export function FormStepperBasicExample() {
 
         {step === 1 && (
           <div className="space-y-4">
-            <label className="block text-sm font-medium">Bio</label>
-            <textarea
-              className="w-full rounded-md border px-3 py-2"
-              rows={4}
-              {...methods.register("bio")}
-            />
+            <TextareaField name="bio" label="Bio" />
           </div>
         )}
 

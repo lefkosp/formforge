@@ -9,7 +9,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <input
         type={type}
-        className={cn("form-input", className)}
+        className={cn("form-input transition-all duration-200 ease-in-out", className)}
         ref={ref}
         {...props}
       />

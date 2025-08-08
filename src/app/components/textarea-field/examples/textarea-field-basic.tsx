@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, FormProvider } from "react-hook-form";
 import { z } from "zod";
+import TextareaField from "@/components/ui/TextareaField";
 import { schema } from "./textarea-field-schema";
 
 export function TextareaFieldBasicExample() {
@@ -20,17 +21,8 @@ export function TextareaFieldBasicExample() {
 
   return (
     <FormProvider {...methods}>
-      <form
-        onSubmit={methods.handleSubmit(onSubmit)}
-        className="space-y-4 w-80"
-      >
-        <label className="block text-sm font-medium">Bio</label>
-        <textarea
-          className="w-full rounded-md border px-3 py-2"
-          rows={4}
-          placeholder="Tell us about yourself..."
-          {...methods.register("bio")}
-        />
+      <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-4 w-80">
+        <TextareaField name="bio" label="Bio" placeholder="Tell us about yourself..." />
         <button
           type="submit"
           className="form-button form-button-primary w-full"

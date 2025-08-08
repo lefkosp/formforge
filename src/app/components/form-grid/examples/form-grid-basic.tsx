@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, FormProvider } from "react-hook-form";
 import { z } from "zod";
 import InputField from "@/components/ui/InputField";
+import FormGrid from "@/components/ui/FormGrid";
 import { schema } from "./form-grid-schema";
 
 export function FormGridBasicExample() {
@@ -22,14 +23,11 @@ export function FormGridBasicExample() {
 
   return (
     <FormProvider {...methods}>
-      <form
-        onSubmit={methods.handleSubmit(onSubmit)}
-        className="space-y-4 w-[28rem]"
-      >
-        <div className="grid grid-cols-2 gap-4">
+      <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-4 w-[28rem]">
+        <FormGrid>
           <InputField name="city" label="City" />
           <InputField name="zip" label="ZIP" />
-        </div>
+        </FormGrid>
         <button
           type="submit"
           className="form-button form-button-primary w-full"

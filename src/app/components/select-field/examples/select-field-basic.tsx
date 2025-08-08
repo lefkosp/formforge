@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, FormProvider } from "react-hook-form";
 import { z } from "zod";
-
+import SelectField from "@/components/ui/SelectField";
 import { schema } from "./select-field-schema";
 
 export function SelectFieldBasicExample() {
@@ -21,20 +21,17 @@ export function SelectFieldBasicExample() {
 
   return (
     <FormProvider {...methods}>
-      <form
-        onSubmit={methods.handleSubmit(onSubmit)}
-        className="space-y-4 w-80"
-      >
-        <label className="block text-sm font-medium">Country</label>
-        <select
-          className="w-full rounded-md border px-3 py-2"
-          {...methods.register("country")}
-        >
-          <option value="">Select a country</option>
-          <option value="us">United States</option>
-          <option value="ca">Canada</option>
-          <option value="mx">Mexico</option>
-        </select>
+      <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-4 w-80">
+        <SelectField
+          name="country"
+          label="Country"
+          options={[
+            { label: "United States", value: "us" },
+            { label: "Canada", value: "ca" },
+            { label: "Mexico", value: "mx" },
+          ]}
+          placeholder="Select a country"
+        />
         <button
           type="submit"
           className="form-button form-button-primary w-full"

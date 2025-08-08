@@ -64,8 +64,7 @@ export default async function SelectFieldPage() {
 
         <div className="prose prose-gray dark:prose-invert max-w-none">
           <p>
-            The <code>SelectField</code> provides a native select input that
-            works seamlessly with React Hook Form and Zod.
+            The <code>SelectField</code> provides a styled, theme-aware select with a custom arrow, focus ring, and seamless integration with React Hook Form and Zod.
           </p>
         </div>
 

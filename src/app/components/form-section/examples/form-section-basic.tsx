@@ -4,6 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, FormProvider } from "react-hook-form";
 import { z } from "zod";
 import InputField from "@/components/ui/InputField";
+import FormSection from "@/components/ui/FormSection";
+import FormGrid from "@/components/ui/FormGrid";
 import { schema } from "./form-section-schema";
 
 export function FormSectionBasicExample() {
@@ -22,20 +24,13 @@ export function FormSectionBasicExample() {
 
   return (
     <FormProvider {...methods}>
-      <form
-        onSubmit={methods.handleSubmit(onSubmit)}
-        className="space-y-4 w-96"
-      >
-        <div className="rounded-lg border p-4">
-          <h3 className="text-sm font-medium">Personal Information</h3>
-          <p className="text-xs text-muted-foreground mb-4">
-            Provide your basic details.
-          </p>
-          <div className="grid grid-cols-2 gap-4">
+      <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-4 w-96">
+        <FormSection title="Personal Information" description="Provide your basic details.">
+          <FormGrid>
             <InputField name="firstName" label="First name" />
             <InputField name="lastName" label="Last name" />
-          </div>
-        </div>
+          </FormGrid>
+        </FormSection>
         <button
           type="submit"
           className="form-button form-button-primary w-full"
