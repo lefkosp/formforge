@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { PlaygroundControls, ControlSpec } from "./playground-controls";
 import { highlightTsx } from "./highlight";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -49,7 +49,117 @@ export function CodePreview({
           .replace(/placeholder=\".*?\"/, `placeholder=\"${v.placeholder ?? ""}\"`)
           .replace(/type=\".*?\"/, `type=\"${v.type ?? "text"}\"`),
     },
+    "select-field": {
+      render: (v) => (
+        <div className="w-80">
+          <div className="space-y-2">
+            <label className="form-label">{String(v.label ?? "Label")}</label>
+            <select className="form-input">
+              {v.placeholder ? (
+                <option value="" disabled selected>
+                  {String(v.placeholder)}
+                </option>
+              ) : null}
+              <option value="us">United States</option>
+              <option value="ca">Canada</option>
+              <option value="mx">Mexico</option>
+            </select>
+          </div>
+        </div>
+      ),
+      generate: (v, code) =>
+        code
+          .replace(/label=\".*?\"/, `label=\"${v.label ?? "Label"}\"`)
+          .replace(/placeholder=\".*?\"/, `placeholder=\"${v.placeholder ?? ""}\"`),
+    },
+    "textarea-field": {
+      render: (v) => (
+        <div className="w-80">
+          <div className="space-y-2">
+            <label className="form-label">{String(v.label ?? "Label")}</label>
+            <textarea className="form-input" placeholder={String(v.placeholder ?? "")}></textarea>
+          </div>
+        </div>
+      ),
+      generate: (v, code) =>
+        code
+          .replace(/label=\".*?\"/, `label=\"${v.label ?? "Label"}\"`)
+          .replace(/placeholder=\".*?\"/, `placeholder=\"${v.placeholder ?? ""}\"`),
+    },
+    "checkbox-field": {
+      render: (v) => (
+        <div className="w-80">
+          <label className="flex items-center gap-2">
+            <input type="checkbox" />
+            <span>{String(v.label ?? "Label")}</span>
+          </label>
+        </div>
+      ),
+      generate: (v, code) =>
+        code.replace(/label=\".*?\"/, `label=\"${v.label ?? "Label"}\"`),
+    },
   };
+
+  // Decode initial values from URL if present
+  const urlInitialValues = useMemo(() => {
+    if (!playground) return {} as Record<string, unknown>;
+    if (typeof window === "undefined") return {} as Record<string, unknown>;
+
+    const search = new URLSearchParams(window.location.search);
+    const prefix = `pg.${playground.renderId}.`;
+    const nextValues: Record<string, unknown> = {};
+
+    for (const ctrl of playground.controls) {
+      const key = `${prefix}${ctrl.name}`;
+      if (!search.has(key)) continue;
+      const raw = search.get(key) ?? "";
+      switch (ctrl.type) {
+        case "number":
+          nextValues[ctrl.name] = Number(raw);
+          break;
+        case "boolean":
+          nextValues[ctrl.name] = raw === "1" || raw === "true";
+          break;
+        default:
+          nextValues[ctrl.name] = raw;
+      }
+    }
+
+    return nextValues;
+  }, [playground]);
+
+  // Merge URL values on mount and when playground changes
+  useEffect(() => {
+    if (!playground) return;
+    const merged = { ...(playground.initialValues ?? {}), ...(urlInitialValues ?? {}) } as Record<string, unknown>;
+    setPgValues(merged);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [playground?.renderId]);
+
+  // Sync values to URL
+  useEffect(() => {
+    if (!playground) return;
+    if (typeof window === "undefined") return;
+
+    const search = new URLSearchParams(window.location.search);
+    const prefix = `pg.${playground.renderId}.`;
+
+    // Clear previous keys for this renderId
+    const keysToDelete: string[] = [];
+    search.forEach((_, k) => {
+      if (k.startsWith(prefix)) keysToDelete.push(k);
+    });
+    keysToDelete.forEach((k) => search.delete(k));
+
+    // Set current values
+    Object.entries(pgValues).forEach(([name, value]) => {
+      const val = typeof value === "boolean" ? (value ? "1" : "0") : String(value ?? "");
+      search.set(`${prefix}${name}`, val);
+    });
+
+    const newUrl = `${window.location.pathname}?${search.toString()}`;
+    window.history.replaceState(null, "", newUrl);
+  }, [pgValues, playground]);
 
   const rendered = playground ? (renderers[playground.renderId]?.render(pgValues) ?? component) : component;
   const liveTsx = playground ? (renderers[playground.renderId]?.generate(pgValues, tsxCode) ?? tsxCode) : tsxCode;
@@ -100,7 +210,7 @@ export function CodePreview({
                     variant="ghost"
                     size="icon"
                     className="absolute right-2 top-2 h-8 w-8"
-                    onClick={() => copyToClipboard(tsxCode, "tsx")}
+                    onClick={() => copyToClipboard(liveTsx, "tsx")}
                   >
                     {copied === "tsx" ? (
                       <Check className="h-4 w-4" />

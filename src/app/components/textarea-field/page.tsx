@@ -73,6 +73,14 @@ export default async function TextareaFieldPage() {
           component={<TextareaFieldBasicExample />}
           tsxCode={tsxCode}
           zodSchema={zodSchema}
+          playground={{
+            controls: [
+              { type: "text", name: "label", label: "Label" },
+              { type: "text", name: "placeholder", label: "Placeholder" },
+            ],
+            initialValues: { label: "Bio", placeholder: "Tell us about yourself..." },
+            renderId: "textarea-field",
+          }}
         />
 
         <PropsTable props={textareaFieldProps} />
