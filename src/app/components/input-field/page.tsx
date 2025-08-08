@@ -98,6 +98,19 @@ export default async function InputFieldPage() {
           component={<InputFieldBasicExample />}
           tsxCode={tsxCode}
           zodSchema={zodSchema}
+          playground={{
+            controls: [
+              { type: "text", name: "label", label: "Label" },
+              { type: "text", name: "placeholder", label: "Placeholder" },
+              { type: "select", name: "type", label: "Type", options: [
+                { label: "Text", value: "text" },
+                { label: "Email", value: "email" },
+                { label: "Password", value: "password" },
+              ] },
+            ],
+            initialValues: { label: "Email", placeholder: "you@example.com", type: "email" },
+            renderId: "input-field",
+          }}
         />
 
         {/* Props Table */}
