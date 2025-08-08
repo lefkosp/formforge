@@ -9,7 +9,7 @@ export function CheckboxFieldBasicExample() {
   const methods = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
-      accept: false,
+      accept: true,
     },
   });
 

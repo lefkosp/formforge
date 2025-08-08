@@ -22,7 +22,7 @@ export default function LicensePage() {
           <p>
             Permission is hereby granted, free of charge, to any person
             obtaining a copy of this software and associated documentation files
-            (the "Software"), to deal in the Software without restriction,
+            (the &quot;Software&quot;), to deal in the Software without restriction,
             including without limitation the rights to use, copy, modify, merge,
             publish, distribute, sublicense, and/or sell copies of the Software,
             and to permit persons to whom the Software is furnished to do so,
@@ -35,7 +35,7 @@ export default function LicensePage() {
           </p>
 
           <p>
-            THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+            THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,
             EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
             MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
             NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
@@ -48,7 +48,7 @@ export default function LicensePage() {
           <h2>Contributing</h2>
           <p>
             FormForge is an open source project and we welcome contributions
-            from the community. Whether it's bug reports, feature requests, or
+            from the community. Whether it&apos;s bug reports, feature requests, or
             code contributions, every bit helps make FormForge better for
             everyone.
           </p>

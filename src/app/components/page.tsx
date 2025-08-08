@@ -41,6 +41,31 @@ const components = [
     description: "A multi-step form component with progress indication.",
     href: "/components/form-stepper",
   },
+  {
+    name: "FormButton",
+    description: "Buttons styled consistently for forms.",
+    href: "/components/form-button",
+  },
+  {
+    name: "RadioGroupField",
+    description: "A group of radio buttons integrated with React Hook Form.",
+    href: "/components/radio-group-field",
+  },
+  {
+    name: "SwitchField",
+    description: "A toggle switch integrated with React Hook Form.",
+    href: "/components/switch-field",
+  },
+  {
+    name: "DatePickerField",
+    description: "A date input field integrated with React Hook Form.",
+    href: "/components/date-picker-field",
+  },
+  {
+    name: "FileUploadField",
+    description: "A file input field integrated with React Hook Form.",
+    href: "/components/file-upload-field",
+  }
 ];
 
 export default function ComponentsPage() {

@@ -150,7 +150,7 @@ type FormData = z.infer<typeof formSchema>;`;
           </ul>
 
           <h2>Quick Start</h2>
-          <p>Here's a simple example of how to create a form with FormForge:</p>
+          <p>Here&apos;s a simple example of how to create a form with FormForge:</p>
         </div>
 
         {/* Code Preview */}

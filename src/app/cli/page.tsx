@@ -73,7 +73,7 @@ export default function CLIPage() {
           <p>
             The CLI supports custom templates for generating forms. Create your
             own templates in the <code>templates</code> directory to match your
-            project's conventions.
+            project&apos;s conventions.
           </p>
         </div>
       </div>

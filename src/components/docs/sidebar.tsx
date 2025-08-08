@@ -7,7 +7,7 @@ import {
   ChevronRight,
   FileText,
   Code,
-  Settings,
+
   BookOpen,
   Terminal,
   Heart,
@@ -44,6 +44,11 @@ const sidebarItems: SidebarItem[] = [
       { title: "FormSection", href: "/components/form-section" },
       { title: "FormGrid", href: "/components/form-grid" },
       { title: "FormStepper", href: "/components/form-stepper" },
+      { title: "FormButton", href: "/components/form-button" },
+      { title: "RadioGroupField", href: "/components/radio-group-field" },
+      { title: "SwitchField", href: "/components/switch-field" },
+      { title: "DatePickerField", href: "/components/date-picker-field" },
+      { title: "FileUploadField", href: "/components/file-upload-field" }
     ],
   },
   {

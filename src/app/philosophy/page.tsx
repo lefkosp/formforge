@@ -34,7 +34,7 @@ export default function PhilosophyPage() {
 
           <h2>Accessibility as a Foundation</h2>
           <p>
-            Accessibility isn't an afterthought—it's built into every component
+            Accessibility isn&apos;t an afterthought—it&apos;s built into every component
             from the ground up. FormForge components include proper ARIA
             attributes, keyboard navigation, and semantic HTML to ensure your
             forms work for everyone.
@@ -42,14 +42,14 @@ export default function PhilosophyPage() {
 
           <h2>Performance Through Simplicity</h2>
           <p>
-            By leveraging React Hook Form's optimized rendering and minimal
+            By leveraging React Hook Form&apos;s optimized rendering and minimal
             re-renders, FormForge provides excellent performance out of the box.
             No unnecessary complexity, just fast, efficient forms.
           </p>
 
           <h2>Flexibility Without Compromise</h2>
           <p>
-            While FormForge provides sensible defaults, it doesn't lock you into
+            While FormForge provides sensible defaults, it doesn&apos;t lock you into
             a rigid structure. Every component can be customized to match your
             design system, and the underlying libraries (React Hook Form, Zod)
             are always accessible when you need more control.
@@ -58,14 +58,14 @@ export default function PhilosophyPage() {
           <h2>Composition Over Configuration</h2>
           <p>
             FormForge components are designed to work together seamlessly, but
-            they're also composable. Mix and match components, extend them, or
+            they&apos;re also composable. Mix and match components, extend them, or
             build your own—the architecture supports it all.
           </p>
 
           <h2>Documentation as Code</h2>
           <p>
             Every component includes comprehensive documentation, live examples,
-            and TypeScript definitions. The documentation you're reading right
+            and TypeScript definitions. The documentation you&apos;re reading right
             now is generated from the same code that powers your forms.
           </p>
 
