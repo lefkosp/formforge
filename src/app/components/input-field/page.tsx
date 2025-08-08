@@ -3,7 +3,9 @@ import path from "path";
 import { DocsLayout } from "@/components/docs/layout";
 import { CodePreview } from "@/components/docs/code-preview";
 import { PropsTable } from "@/components/docs/props-table";
-import { InputFieldBasicExample } from "./examples/input-field-basic";
+import InputLabelOutsideExample from "./examples/input-label-outside";
+import InputLabelInsideExample from "./examples/input-label-inside";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 export const runtime = "nodejs";
 export const dynamic = "force-static";
@@ -19,8 +21,14 @@ const inputFieldProps = [
   {
     name: "label",
     type: "string",
-    description: "The label text displayed above the input field.",
+    description: "The label text for the input field.",
     required: true,
+  },
+  {
+    name: "labelPosition",
+    type: '"outside" | "inside"',
+    default: '"inside"',
+    description: "Controls label placement. 'outside' renders label above the input. 'inside' renders a floating label that moves above on focus or when populated.",
   },
   {
     name: "type",
@@ -42,32 +50,24 @@ const inputFieldProps = [
   {
     name: "className",
     type: "string",
-    description: "Additional CSS classes to apply to the input field.",
+    description: "Additional CSS classes to apply to the input element.",
+  },
+  {
+    name: "style",
+    type: "React.CSSProperties",
+    description: "Inline styles applied to the input element.",
   },
 ];
 
 export default async function InputFieldPage() {
-  const exampleTsxPath = path.join(
-    process.cwd(),
-    "src",
-    "app",
-    "components",
-    "input-field",
-    "examples",
-    "input-field-basic.tsx"
-  );
-  const exampleSchemaPath = path.join(
-    process.cwd(),
-    "src",
-    "app",
-    "components",
-    "input-field",
-    "examples",
-    "input-field-schema.ts"
-  );
+  const baseDir = path.join(process.cwd(), "src", "app", "components", "input-field", "examples");
+  const outsideTsxPath = path.join(baseDir, "input-label-outside.tsx");
+  const insideTsxPath = path.join(baseDir, "input-label-inside.tsx");
+  const exampleSchemaPath = path.join(baseDir, "input-field-schema.ts");
 
-  const [tsxCode, zodSchema] = await Promise.all([
-    fs.readFile(exampleTsxPath, "utf8"),
+  const [outsideTsxCode, insideTsxCode, zodSchema] = await Promise.all([
+    fs.readFile(outsideTsxPath, "utf8"),
+    fs.readFile(insideTsxPath, "utf8"),
     fs.readFile(exampleSchemaPath, "utf8"),
   ]);
 
@@ -86,32 +86,33 @@ export default async function InputFieldPage() {
         {/* Description */}
         <div className="prose prose-gray dark:prose-invert max-w-none">
           <p>
-            The <code>InputField</code> component provides a complete input
-            field solution with label, validation, error display, and proper
-            accessibility attributes. It integrates seamlessly with React Hook
-            Form and Zod for type-safe form validation.
+            The <code>InputField</code> component supports two label placements: an external label above the field, and a floating label inside the field that moves on focus or when a value is present.
           </p>
         </div>
 
-        {/* Code Preview */}
-        <CodePreview
-          component={<InputFieldBasicExample />}
-          tsxCode={tsxCode}
-          zodSchema={zodSchema}
-          playground={{
-            controls: [
-              { type: "text", name: "label", label: "Label" },
-              { type: "text", name: "placeholder", label: "Placeholder" },
-              { type: "select", name: "type", label: "Type", options: [
-                { label: "Text", value: "text" },
-                { label: "Email", value: "email" },
-                { label: "Password", value: "password" },
-              ] },
-            ],
-            initialValues: { label: "Email", placeholder: "you@example.com", type: "email" },
-            renderId: "input-field",
-          }}
-        />
+        {/* Examples in Tabs */}
+        <Tabs defaultValue="outside" className="w-full">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="outside">Label Outside</TabsTrigger>
+            <TabsTrigger value="inside">Label Inside</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="outside">
+            <CodePreview
+              component={<InputLabelOutsideExample />}
+              tsxCode={outsideTsxCode}
+              zodSchema={zodSchema}
+            />
+          </TabsContent>
+
+          <TabsContent value="inside">
+            <CodePreview
+              component={<InputLabelInsideExample />}
+              tsxCode={insideTsxCode}
+              zodSchema={zodSchema}
+            />
+          </TabsContent>
+        </Tabs>
 
         {/* Props Table */}
         <PropsTable props={inputFieldProps} />
