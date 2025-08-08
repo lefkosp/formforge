@@ -75,7 +75,17 @@ const components = [
     name: "FileUploadField",
     description: "A file input field integrated with React Hook Form.",
     href: "/components/file-upload-field",
-  }
+  },
+  {
+    name: "FormRow",
+    description: "A flexible row with optional inline label layout.",
+    href: "/components/form-row",
+  },
+  {
+    name: "FormGroup",
+    description: "Group related fields with consistent spacing.",
+    href: "/components/form-group",
+  },
 ];
 
 export default function ComponentsPage() {
