@@ -65,6 +65,11 @@ const sidebarItems: SidebarItem[] = [
     ],
   },
   {
+    title: "Form Playground",
+    href: "/form-playground",
+    icon: Code,
+  },
+  {
     title: "CLI",
     href: "/cli",
     icon: Terminal,
