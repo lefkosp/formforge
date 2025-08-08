@@ -43,7 +43,7 @@ const TextareaField: React.FC<TextareaFieldProps> = ({ name, label, className, r
         {...props}
       />
       {error && (
-        <p className="mt-1 text-xs text-destructive animate-fade-in">{error.message?.toString()}</p>
+        <p className="form-error-text">{error.message?.toString()}</p>
       )}
     </div>
   );

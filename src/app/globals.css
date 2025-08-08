@@ -80,6 +80,13 @@
 }
 
 @layer components {
+  /* Keep error text consistent across fields */
+  .form-error-text {
+    font-size: 0.75rem; /* text-xs */
+    margin-top: 0.25rem; /* mt-1 */
+    color: var(--color-destructive);
+    animation: fade-in 0.2s ease-out both;
+  }
   .form-input {
     display: flex;
     height: 3rem;

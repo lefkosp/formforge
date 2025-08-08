@@ -45,7 +45,7 @@ const SelectField: React.FC<SelectFieldProps> = ({ name, label, options, placeho
                   <option key={opt.value} value={opt.value}>{opt.label}</option>
                 ))}
               </select>
-              <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+              <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground transition-transform duration-200 ease-in-out" />
             </>
           )}
         />
@@ -62,7 +62,7 @@ const SelectField: React.FC<SelectFieldProps> = ({ name, label, options, placeho
       >
         {label}
       </Label>
-      {error && <p className="mt-1 text-xs text-destructive animate-fade-in">{error.message?.toString()}</p>}
+      {error && <p className="form-error-text">{error.message?.toString()}</p>}
     </div>
   );
 };

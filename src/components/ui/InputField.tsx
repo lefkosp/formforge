@@ -51,7 +51,7 @@ const InputField = ({
         {label}
       </Label>
       {error && (
-        <p className="mt-1 text-xs text-destructive animate-fade-in">
+        <p className="form-error-text">
           {error.message?.toString()}
         </p>
       )}

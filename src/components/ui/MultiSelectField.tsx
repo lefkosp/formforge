@@ -96,7 +96,7 @@ const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
               </div>
               <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
               {open && (
-                <div className="mt-1 rounded-md border border-border bg-background shadow-sm overflow-hidden">
+                <div className="mt-1 rounded-md border border-border bg-background shadow-sm overflow-hidden origin-top animate-slide-in">
                   <ul className="max-h-56 overflow-auto p-1">
                     {options.map((opt) => {
                       const isChecked = selected.includes(opt.value);
@@ -126,7 +126,7 @@ const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
       />
 
       {error && (
-        <p className="mt-1 text-xs text-destructive animate-fade-in">{error.message?.toString()}</p>
+        <p className="form-error-text">{error.message?.toString()}</p>
       )}
     </div>
   );

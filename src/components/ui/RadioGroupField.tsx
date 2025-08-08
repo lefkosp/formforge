@@ -53,7 +53,7 @@ const RadioGroupField = ({ name, label, options, className }: RadioGroupFieldPro
         ))}
       </div>
       {error && (
-        <p className="mt-1 text-xs text-destructive animate-fade-in">{error.message?.toString()}</p>
+        <p className="form-error-text">{error.message?.toString()}</p>
       )}
     </div>
   );
