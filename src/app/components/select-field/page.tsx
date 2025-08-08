@@ -4,6 +4,7 @@ import { DocsLayout } from "@/components/docs/layout";
 import { CodePreview } from "@/components/docs/code-preview";
 import { PropsTable } from "@/components/docs/props-table";
 import { SelectFieldBasicExample } from "./examples/select-field-basic";
+import SelectFieldLive from "./examples/select-field-live";
 
 export const runtime = "nodejs";
 export const dynamic = "force-static";
@@ -73,6 +74,11 @@ export default async function SelectFieldPage() {
           tsxCode={tsxCode}
           zodSchema={zodSchema}
         />
+
+        <div className="mt-8">
+          <h2 className="text-xl font-semibold mb-2">Live playground</h2>
+          <SelectFieldLive />
+        </div>
 
         <PropsTable props={selectFieldProps} />
       </div>

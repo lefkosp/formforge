@@ -13,7 +13,7 @@ export type ControlSpec =
   | { type: "select"; name: string; label: string; options: { label: string; value: string }[] }
   | { type: "boolean"; name: string; label: string };
 
-export interface PlaygroundControlsProps<T extends Record<string, unknown>> {
+export interface PlaygroundControlsProps<T> {
   title?: string;
   controls: ControlSpec[];
   values: T;
@@ -21,7 +21,7 @@ export interface PlaygroundControlsProps<T extends Record<string, unknown>> {
   className?: string;
 }
 
-export function PlaygroundControls<T extends Record<string, unknown>>({
+export function PlaygroundControls<T>({
   title = "Playground Controls",
   controls,
   values,
@@ -31,7 +31,7 @@ export function PlaygroundControls<T extends Record<string, unknown>>({
   const [open, setOpen] = React.useState(true);
 
   const update = (name: string, value: unknown) => {
-    onChange({ ...(values as Record<string, unknown>), [name]: value } as T);
+    onChange({ ...(values as unknown as Record<string, unknown>), [name]: value } as T);
   };
 
   return (
@@ -55,7 +55,7 @@ export function PlaygroundControls<T extends Record<string, unknown>>({
                 <Label className="text-xs">{ctrl.label}</Label>
                 {ctrl.type === "text" && (
                   <Input
-                    value={(values as Record<string, unknown>)[ctrl.name] as string ?? ""}
+                    value={(values as unknown as Record<string, unknown>)[ctrl.name] as string ?? ""}
                     placeholder={ctrl.placeholder}
                     onChange={(e) => update(ctrl.name, e.target.value)}
                   />
@@ -63,7 +63,7 @@ export function PlaygroundControls<T extends Record<string, unknown>>({
                 {ctrl.type === "number" && (
                   <Input
                     type="number"
-                    value={Number((values as Record<string, unknown>)[ctrl.name] ?? 0)}
+                    value={Number(((values as unknown as Record<string, unknown>)[ctrl.name] ?? 0) as number)}
                     min={ctrl.min}
                     max={ctrl.max}
                     step={ctrl.step}
@@ -73,7 +73,7 @@ export function PlaygroundControls<T extends Record<string, unknown>>({
                 {ctrl.type === "select" && (
                   <select
                     className="w-full rounded-md border px-3 py-2"
-                    value={(values as Record<string, unknown>)[ctrl.name] as string}
+                    value={(values as unknown as Record<string, unknown>)[ctrl.name] as string}
                     onChange={(e) => update(ctrl.name, e.target.value)}
                   >
                     {ctrl.options.map((o) => (
@@ -85,7 +85,7 @@ export function PlaygroundControls<T extends Record<string, unknown>>({
                   <label className="flex items-center gap-2 text-sm">
                     <input
                       type="checkbox"
-                      checked={Boolean((values as Record<string, unknown>)[ctrl.name])}
+                      checked={Boolean((values as unknown as Record<string, unknown>)[ctrl.name])}
                       onChange={(e) => update(ctrl.name, e.target.checked)}
                     />
                     <span>Enabled</span>
