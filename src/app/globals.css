@@ -75,7 +75,17 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
     font-feature-settings: "rlig" 1, "calt" 1;
-    @apply antialiased;
+    @apply antialiased leading-7;
+  }
+
+  /* Accessible focus outlines for interactive elements */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
   }
 }
 
@@ -114,15 +124,21 @@
     box-shadow: 0 0 0 2px var(--color-accent);
   }
 
+  .form-input:hover:not(:disabled) {
+    border-color: var(--color-ring);
+  }
+
   .form-input:disabled {
     cursor: not-allowed;
     opacity: 0.5;
   }
 
   .form-label {
+    display: block;
     font-size: 0.875rem;
     font-weight: 500;
     line-height: 1;
+    margin-bottom: 0.25rem;
   }
 
   .form-label:disabled {
@@ -188,8 +204,9 @@
 /* Prose styles for documentation */
 @layer utilities {
   .prose {
-    max-width: 65ch;
+    max-width: 70ch;
     color: var(--color-foreground);
+    line-height: 1.8;
   }
 
   .prose h1,
@@ -258,14 +275,34 @@
 
   .prose pre {
     color: var(--color-foreground);
-    background: linear-gradient(135deg, color-mix(in oklab, var(--accent) 18%, var(--color-muted) 82%), var(--color-muted));
+    background-color: color-mix(in oklab, var(--color-muted) 70%, var(--color-card) 30%);
     overflow-x: auto;
-    font-size: 0.875em;
-    line-height: 1.7142857;
-    margin-top: 1.7142857em;
-    margin-bottom: 1.7142857em;
-    border-radius: 0.375rem;
-    padding: 0.8571429em 1.1428571em;
+    font-size: 0.9em;
+    line-height: 1.7;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    border-radius: 0.5rem;
+    padding: 0.875em 1rem;
+    border: 1px solid color-mix(in oklab, var(--color-border) 85%, var(--color-foreground) 15%);
+  }
+
+  /* Code block scrollbar styling */
+  .prose pre::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+  }
+  .prose pre::-webkit-scrollbar-track {
+    background: color-mix(in oklab, var(--color-muted) 80%, var(--color-card) 20%);
+    border-radius: 8px;
+  }
+  .prose pre::-webkit-scrollbar-thumb {
+    background: color-mix(in oklab, var(--color-border) 70%, var(--color-foreground) 30%);
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  .prose pre:hover::-webkit-scrollbar-thumb {
+    background: color-mix(in oklab, var(--color-border) 50%, var(--color-foreground) 50%);
   }
 
   .prose pre code {

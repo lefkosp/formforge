@@ -161,7 +161,7 @@ export function Sidebar({ className }: SidebarProps) {
         </Link>
       </div>
 
-      <div className="p-4 border-b">
+      <div className="p-3 border-b">
         <div className="relative">
           <Input
             placeholder="Search docs…"
@@ -177,7 +177,7 @@ export function Sidebar({ className }: SidebarProps) {
         </div>
       </div>
 
-      <nav className="flex-1 space-y-1 p-4" aria-label="Sidebar Navigation">
+      <nav className="flex-1 space-y-1 p-3" aria-label="Sidebar Navigation">
         {query.trim().length > 0 ? (
           <ul id="sidebar-search-results" role="listbox" className="space-y-1">
             {results.map((r, idx) => (
@@ -185,8 +185,8 @@ export function Sidebar({ className }: SidebarProps) {
                 <Link
                   href={r.item.href}
                   className={cn(
-                    "group flex items-center justify-between rounded-md px-3 py-2 text-sm transition-colors",
-                    idx === activeIndex ? "bg-accent text-accent-foreground" : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                    "group flex items-center justify-between rounded-md px-2.5 py-2 text-sm transition-all duration-150",
+                    idx === activeIndex ? "bg-accent text-accent-foreground shadow-sm" : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
                   )}
                 >
                   <span className="truncate">{highlight(r.item.title, r.matches)}</span>
@@ -204,9 +204,9 @@ export function Sidebar({ className }: SidebarProps) {
             <Link
               href={item.href}
               className={cn(
-                "group flex items-center space-x-2 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground",
+                "group flex items-center space-x-2 rounded-md px-2.5 py-2 text-sm font-medium transition-all duration-150 hover:bg-accent hover:text-accent-foreground",
                 pathname === item.href
-                  ? "bg-gradient-to-r from-[var(--accent-soft)] to-transparent text-accent-foreground"
+                  ? "bg-gradient-to-r from-[var(--accent-soft)] to-transparent text-accent-foreground shadow-sm"
                   : "text-muted-foreground"
               )}
             >
@@ -215,19 +215,19 @@ export function Sidebar({ className }: SidebarProps) {
             </Link>
 
             {item.children && pathname.startsWith(item.href) && (
-              <div className="ml-6 mt-2 space-y-1">
+              <div className="ml-4 mt-1.5 space-y-1">
                 {item.children.map((child) => (
                   <Link
                     key={child.href}
                     href={child.href}
                     className={cn(
-                      "flex items-center space-x-2 rounded-md px-3 py-2 text-sm transition-colors hover:bg-accent hover:text-accent-foreground",
+                      "flex items-center space-x-2 rounded-md px-2.5 py-2 text-sm transition-all duration-150 hover:bg-accent hover:text-accent-foreground",
                       pathname === child.href
-                        ? "bg-accent text-accent-foreground"
+                        ? "bg-accent text-accent-foreground shadow-sm"
                         : "text-muted-foreground"
                     )}
                   >
-                    <ChevronRight className="h-3 w-3" />
+                    <ChevronRight className="h-3 w-3 text-muted-foreground group-hover:text-accent-foreground" />
                     <span>{child.title}</span>
                   </Link>
                 ))}
