@@ -68,6 +68,13 @@ export default async function CheckboxFieldPage() {
           component={<CheckboxFieldBasicExample />}
           tsxCode={tsxCode}
           zodSchema={zodSchema}
+          playground={{
+            controls: [
+              { type: "text", name: "label", label: "Label" },
+            ],
+            initialValues: { label: "I agree to the terms and conditions" },
+            renderId: "checkbox-field",
+          }}
         />
 
         <PropsTable props={checkboxFieldProps} />
