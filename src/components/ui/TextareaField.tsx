@@ -34,10 +34,8 @@ const TextareaField: React.FC<TextareaFieldProps> = ({ name, label, className, r
         rows={rows}
         aria-invalid={!!error}
         className={cn(
-          "peer w-full rounded-md border border-input bg-background px-3 pt-5 pb-2 text-sm shadow-sm placeholder:text-muted-foreground placeholder:italic",
-          "focus-visible:ring-2 focus-visible:ring-accent focus-visible:border-transparent transition-all duration-200 ease-in-out",
-          "hover:ring-2 hover:ring-accent/50",
-          error && "border-destructive animate-shake focus-visible:ring-destructive"
+          "peer form-control-base form-textarea shadow-sm placeholder:text-muted-foreground placeholder:italic",
+          error && "is-error animate-shake"
         )}
         {...register(name)}
         {...props}

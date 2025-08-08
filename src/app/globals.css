@@ -192,6 +192,183 @@
     background-color: var(--color-secondary) / 0.8;
   }
 
+  /* Shared form control base (used by input/select/textarea-like controls) */
+  .form-control-base {
+    display: flex;
+    width: 100%;
+    border-radius: var(--radius);
+    border: 1px solid var(--color-input);
+    background-color: var(--color-background);
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: var(--color-foreground);
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, box-shadow;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+
+  .form-control-base:focus-visible {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px var(--color-accent);
+  }
+
+  .form-control-base:hover:not(:disabled) {
+    border-color: var(--color-ring);
+  }
+
+  .form-control-base:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  /* Input variations already exist as .form-input; ensure it composes base */
+  .form-input {
+    height: 3rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .form-input.form-input--floating {
+    padding-top: 1.25rem; /* space for floating label */
+  }
+
+  /* Select */
+  .form-select {
+    height: 3rem;
+    padding: 1.25rem 2.5rem 0.75rem 1rem; /* extra top space for floating label + chevron */
+    appearance: none;
+    background-image: none;
+  }
+
+  /* Textarea */
+  .form-textarea {
+    min-height: 3rem;
+    padding: 1.25rem 1rem 0.5rem 1rem; /* space for floating label */
+    resize: vertical;
+  }
+
+  /* Checkbox visual box (used next to a visually-hidden input) */
+  .form-checkbox {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem; /* size-5 */
+    height: 1.25rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--color-input);
+    background-color: var(--color-background);
+    transition: border-color 150ms cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1),
+      background-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Hover/focus states driven by parent label and hidden input */
+  .group:hover .form-checkbox {
+    border-color: var(--color-ring);
+  }
+  .group:has(input:focus-visible) .form-checkbox {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px var(--color-accent);
+  }
+
+  /* Error state helpers */
+  .form-control-base.is-error {
+    border-color: var(--color-destructive);
+  }
+  .form-control-base.is-error:focus-visible {
+    box-shadow: 0 0 0 2px var(--color-destructive);
+  }
+  .group:has(input[aria-invalid="true"]) .form-checkbox {
+    border-color: var(--color-destructive);
+    box-shadow: 0 0 0 2px var(--color-destructive);
+  }
+  .form-switch-root[aria-invalid="true"]:focus-visible {
+    box-shadow: 0 0 0 2px var(--color-destructive), 0 0 0 4px var(--color-background);
+  }
+
+  /* MultiSelect trigger (the clickable field) */
+  .form-multiselect-trigger {
+    min-height: 3rem;
+    padding: 1.25rem 1rem 0.5rem 1rem; /* space for floating label */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    cursor: text;
+  }
+
+  .form-multiselect-dropdown {
+    border-radius: var(--radius);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-background);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  }
+
+  .form-multiselect-option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    border-radius: calc(var(--radius) - 2px);
+    transition: background-color 150ms, color 150ms;
+  }
+  .form-multiselect-option:hover {
+    background-color: color-mix(in oklab, var(--color-accent) 80%, transparent);
+    color: var(--color-accent-foreground);
+  }
+
+  /* Chip */
+  .form-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    border-radius: 9999px;
+    background-color: var(--color-accent);
+    color: var(--color-accent-foreground);
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+
+  /* Switch */
+  .form-switch-root {
+    display: inline-flex;
+    height: 1.5rem; /* h-6 */
+    width: 2.75rem; /* w-11 */
+    align-items: center;
+    cursor: pointer;
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    transition: background-color 150ms, box-shadow 150ms;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
+  .form-switch-root:focus-visible {
+    box-shadow: 0 0 0 2px var(--color-ring), 0 0 0 4px var(--color-background);
+  }
+  .form-switch-root[data-state="checked"] {
+    background-color: var(--color-primary);
+  }
+  .form-switch-root[data-state="unchecked"] {
+    background-color: var(--color-input);
+  }
+
+  .form-switch-thumb {
+    pointer-events: none;
+    width: 1.25rem; /* w-5 */
+    height: 1.25rem; /* h-5 */
+    border-radius: 9999px;
+    background-color: var(--color-background);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.12);
+    transition: transform 150ms;
+    transform: translateX(0);
+  }
+  .form-switch-root[data-state="checked"] .form-switch-thumb {
+    transform: translateX(1.25rem); /* translate-x-5 */
+  }
+
   /* Gradient accents for headers */
   .heading-gradient {
     background-image: linear-gradient(90deg, var(--accent), color-mix(in oklab, var(--color-primary) 60%, var(--accent) 40%));

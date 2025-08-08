@@ -31,10 +31,8 @@ const InputField = ({
         placeholder=" "
         aria-invalid={!!error}
         className={cn(
-          "peer h-12 w-full rounded-md border border-input bg-background px-3 pt-5 text-sm placeholder:text-muted-foreground placeholder:italic shadow-sm",
-          "focus-visible:ring-2 focus-visible:ring-accent focus-visible:border-transparent focus-visible:shadow-none transition-all duration-200 ease-in-out",
-          "hover:ring-2 hover:ring-accent/50",
-          error && "border-destructive animate-shake focus-visible:ring-destructive"
+          "peer form-control-base form-input form-input--floating placeholder:text-muted-foreground placeholder:italic shadow-sm",
+          error && "is-error animate-shake"
         )}
         {...register(name)}
         {...props}

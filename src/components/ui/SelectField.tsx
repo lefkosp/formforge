@@ -32,9 +32,8 @@ const SelectField: React.FC<SelectFieldProps> = ({ name, label, options, placeho
                 id={name}
                 {...field}
                 className={cn(
-                  "peer h-12 w-full appearance-none rounded-md border border-border bg-background px-3 pt-5 text-sm shadow-sm transition-all duration-200 ease-in-out",
-                  "focus:ring-2 focus:ring-accent focus:border-transparent hover:ring-2 hover:ring-accent/50",
-                  error && "border-destructive animate-shake focus:ring-destructive"
+                  "peer form-control-base form-select shadow-sm",
+                  error && "is-error animate-shake"
                 )}
                 aria-invalid={!!error}
                 {...props}
