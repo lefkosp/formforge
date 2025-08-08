@@ -21,7 +21,7 @@ interface MultiSelectFieldProps {
 
 const Chip: React.FC<{ children: React.ReactNode; onRemove?: () => void }>
   = ({ children, onRemove }) => (
-  <span className="inline-flex items-center gap-1 rounded-full bg-accent text-accent-foreground px-2 py-1 text-xs">
+  <span className="form-chip">
     {children}
     {onRemove && (
       <button type="button" className="ml-0.5 rounded-full p-0.5 hover:bg-accent/80 transition-colors" onClick={onRemove} aria-label="Remove">
@@ -78,9 +78,8 @@ const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
             <div>
               <div
                 className={cn(
-                  "peer min-h-12 w-full rounded-md border border-border bg-background px-3 pt-5 pb-2 flex flex-wrap gap-2 cursor-text shadow-sm transition-all duration-200 ease-in-out",
-                  "focus-within:ring-2 focus-within:ring-accent focus-within:border-transparent hover:ring-2 hover:ring-accent/50",
-                  error && "border-destructive animate-shake focus-within:ring-destructive"
+                  "peer form-control-base form-multiselect-trigger shadow-sm",
+                  error && "is-error animate-shake"
                 )}
                 onClick={() => setOpen((o) => !o)}
               >
@@ -96,7 +95,7 @@ const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
               </div>
               <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
               {open && (
-                <div className="mt-1 rounded-md border border-border bg-background shadow-sm overflow-hidden origin-top animate-slide-in">
+                <div className="mt-1 form-multiselect-dropdown overflow-hidden origin-top animate-slide-in">
                   <ul className="max-h-56 overflow-auto p-1">
                     {options.map((opt) => {
                       const isChecked = selected.includes(opt.value);
@@ -105,7 +104,7 @@ const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
                           <button
                             type="button"
                             onClick={() => toggle(opt.value)}
-                            className="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground transition-colors rounded"
+                            className="form-multiselect-option"
                           >
                             <span className={"relative inline-flex items-center justify-center"}>
                               <span className={"inline-flex size-4 items-center justify-center rounded-[4px] border border-input bg-background shadow-sm"}>

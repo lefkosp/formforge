@@ -33,9 +33,7 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({ name, label, className, .
           <span
             aria-hidden
             className={cn(
-              "inline-flex size-5 items-center justify-center rounded-md border border-input bg-background shadow-sm transition-all duration-200 ease-in-out",
-              "group-hover:ring-2 group-hover:ring-accent",
-              "peer-focus-visible:ring-2 peer-focus-visible:ring-accent",
+              "form-checkbox shadow-sm",
               "peer-checked:bg-accent peer-checked:text-accent-foreground peer-checked:border-accent peer-checked:shadow peer-checked:shadow-accent/40",
               error && "ring-2 ring-destructive"
             )}
