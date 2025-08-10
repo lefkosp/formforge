@@ -74,7 +74,29 @@ export function CodePreview({
 
   const copyToClipboard = async (text: string, type: string) => {
     try {
-      await navigator.clipboard.writeText(text);
+      const canUseAsyncClipboard =
+        typeof navigator !== "undefined" &&
+        typeof navigator.clipboard !== "undefined" &&
+        typeof navigator.clipboard.writeText === "function";
+
+      if (canUseAsyncClipboard) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        // Fallback for environments where navigator.clipboard is unavailable
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.setAttribute("readonly", "");
+        textarea.style.position = "fixed";
+        textarea.style.left = "-9999px";
+        document.body.appendChild(textarea);
+        textarea.select();
+        const successful = document.execCommand("copy");
+        document.body.removeChild(textarea);
+        if (!successful) {
+          throw new Error("Copy command was unsuccessful");
+        }
+      }
+
       setCopied(type);
       setTimeout(() => setCopied(null), 2000);
     } catch (err) {
@@ -86,7 +108,7 @@ export function CodePreview({
     <div className={cn("space-y-4", className)}>
       {/* Live Component Preview */}
       <div className="rounded-lg border bg-card p-6">
-        <div className="mb-4 flex items-center justify-between">
+        <div className="mb-4 flex flex-col items-center justify-between gap-3">
           <h3 className="text-sm font-medium text-muted-foreground">Preview</h3>
           {playground && (
             <div className="w-64">
@@ -158,6 +180,20 @@ export function CodePreview({
           </Tabs>
         </div>
       </div>
+
+      {/* Snackbar */}
+      {copied && (
+        <div className="fixed bottom-4 right-4 z-50">
+          <div className="flex items-center gap-2 rounded-md bg-foreground px-3 py-2 text-background shadow-lg">
+            <Check className="h-4 w-4" />
+            <span>
+              {copied === "tsx"
+                ? "Copied TSX code to clipboard"
+                : "Copied Zod schema to clipboard"}
+            </span>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
