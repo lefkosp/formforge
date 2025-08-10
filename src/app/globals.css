@@ -157,6 +157,9 @@
       text-decoration-color, fill, stroke;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
+    cursor: pointer;
+    transform: translateY(0);
+    will-change: transform, box-shadow;
   }
 
   .form-button:focus-visible {
@@ -170,6 +173,16 @@
     opacity: 0.5;
   }
 
+  .form-button:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px color-mix(in oklab, var(--color-ring) 12%, transparent 88%);
+  }
+
+  .form-button:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 3px 8px color-mix(in oklab, var(--color-ring) 18%, transparent 82%);
+  }
+
   .form-button-primary {
     background-color: var(--color-primary);
     color: var(--color-primary-foreground);
@@ -181,6 +194,10 @@
     background-color: color-mix(in oklab, var(--color-primary) 92%, black 8%);
   }
 
+  .form-button-primary:active {
+    background-color: color-mix(in oklab, var(--color-primary) 88%, black 12%);
+  }
+
   .form-button-secondary {
     background-color: var(--color-secondary);
     color: var(--color-secondary-foreground);
@@ -190,6 +207,10 @@
 
   .form-button-secondary:hover {
     background-color: color-mix(in oklab, var(--color-secondary) 90%, black 10%);
+  }
+
+  .form-button-secondary:active {
+    background-color: color-mix(in oklab, var(--color-secondary) 86%, black 14%);
   }
 
   /* Gradient accents for headers */

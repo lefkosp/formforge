@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { PlaygroundControls, ControlSpec } from "./playground-controls";
-import { highlightTsx } from "./highlight";
+import { highlightTsxNodes, highlightZodNodes } from "./highlight";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Copy, Check } from "lucide-react";
@@ -69,7 +69,8 @@ export function CodePreview({
   const liveTsx = playground
     ? renderers[playground.renderId]?.generate(pgValues, tsxCode) ?? tsxCode
     : tsxCode;
-  const highlightedTsx = highlightTsx(liveTsx);
+  const highlightedTsxNodes = highlightTsxNodes(liveTsx);
+  const highlightedZodNodes = highlightZodNodes(zodSchema);
 
   const copyToClipboard = async (text: string, type: string) => {
     try {
@@ -125,10 +126,9 @@ export function CodePreview({
                     )}
                   </Button>
                   <pre className="overflow-x-auto p-4 text-sm hover:shadow-[0_0_0_1px_var(--accent-soft),0_0_32px_-10px_var(--accent)] bg-gradient-to-br from-[var(--accent-soft)]/40 via-card to-[var(--accent-soft)]/0 transition-shadow">
-                    <code
-                      className="text-muted-foreground"
-                      dangerouslySetInnerHTML={{ __html: highlightedTsx }}
-                    />
+                    <code className="text-muted-foreground whitespace-pre">
+                      {highlightedTsxNodes}
+                    </code>
                   </pre>
                 </div>
               </TabsContent>
@@ -148,7 +148,9 @@ export function CodePreview({
                     )}
                   </Button>
                   <pre className="overflow-x-auto p-4 text-sm">
-                    <code className="text-muted-foreground">{zodSchema}</code>
+                    <code className="text-muted-foreground whitespace-pre">
+                      {highlightedZodNodes}
+                    </code>
                   </pre>
                 </div>
               </TabsContent>

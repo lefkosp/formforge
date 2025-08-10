@@ -3,6 +3,7 @@
 import * as React from "react";
 // Wrapper for live examples with controls and code
 import { cn } from "@/lib/utils";
+import { highlightTsxNodes } from "./highlight";
 
 interface ExampleWrapperProps {
   component: React.ReactNode;
@@ -11,7 +12,13 @@ interface ExampleWrapperProps {
   className?: string;
 }
 
-export function ExampleWrapper({ component, code, controls, className }: ExampleWrapperProps) {
+export function ExampleWrapper({
+  component,
+  code,
+  controls,
+  className,
+}: ExampleWrapperProps) {
+  const highlighted = React.useMemo(() => highlightTsxNodes(code), [code]);
   return (
     <div className={cn("space-y-4", className)}>
       <div className="rounded-lg border bg-card p-6">
@@ -22,7 +29,11 @@ export function ExampleWrapper({ component, code, controls, className }: Example
         <div className="flex justify-center">{component}</div>
       </div>
       <div className="rounded-lg border bg-card shadow-sm">
-        <pre className="overflow-x-auto p-4 text-sm"><code className="text-muted-foreground">{code}</code></pre>
+        <pre className="overflow-x-auto p-4 text-sm">
+          <code className="text-muted-foreground whitespace-pre">
+            {highlighted}
+          </code>
+        </pre>
       </div>
     </div>
   );
