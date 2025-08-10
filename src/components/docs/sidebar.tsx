@@ -27,7 +27,7 @@ export interface SidebarItem {
 const sidebarItems: SidebarItem[] = [
   {
     title: "Introduction",
-    href: "/",
+    href: "/introduction",
     icon: BookOpen,
   },
   {
