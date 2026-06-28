@@ -8,11 +8,11 @@ import {
   ChevronRight,
   FileText,
   Code,
-
   BookOpen,
   Terminal,
   Heart,
   FileCode,
+  Wand2,
 } from "lucide-react";
 import Fuse, { type FuseResult, type FuseResultMatch } from "fuse.js";
 import { Input } from "@/components/ui/input";
@@ -29,6 +29,11 @@ const sidebarItems: SidebarItem[] = [
     title: "Introduction",
     href: "/introduction",
     icon: BookOpen,
+  },
+  {
+    title: "Form Builder",
+    href: "/form-builder",
+    icon: Wand2,
   },
   {
     title: "Getting Started",

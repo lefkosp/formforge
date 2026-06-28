@@ -45,6 +45,36 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [mode, setModeState] = React.useState<ThemeMode>("light");
   const [accent, setAccentState] = React.useState<string>("#6366f1"); // indigo
 
+  // Compute readable foreground for an accent color
+  function getAccentForeground(hex: string): string {
+    const toRgb = (h: string) => {
+      let s = h.replace("#", "");
+      if (s.length === 3) s = s.split("").map((c) => c + c).join("");
+      const num = parseInt(s, 16);
+      return {
+        r: (num >> 16) & 255,
+        g: (num >> 8) & 255,
+        b: num & 255,
+      };
+    };
+    const { r, g, b } = toRgb(hex);
+    const srgb = [r, g, b].map((v) => v / 255).map((v) =>
+      v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4)
+    );
+    const L = 0.2126 * srgb[0] + 0.7152 * srgb[1] + 0.0722 * srgb[2];
+    // Choose light/dark foreground for contrast
+    return L > 0.55 ? "#0a0a0b" : "#fafafa";
+  }
+  function toRgba(hex: string, alpha: number): string {
+    let s = hex.replace("#", "");
+    if (s.length === 3) s = s.split("").map((c) => c + c).join("");
+    const num = parseInt(s, 16);
+    const r = (num >> 16) & 255;
+    const g = (num >> 8) & 255;
+    const b = num & 255;
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  }
+
   React.useEffect(() => {
     try {
       const savedMode = (localStorage.getItem(MODE_KEY) as ThemeMode) || null;
@@ -77,9 +107,14 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   React.useEffect(() => {
     const root = document.documentElement;
+    // Dynamic accent variables (Tailwind reads --color-accent)
+    const foreground = getAccentForeground(accent);
     root.style.setProperty("--accent", accent);
-    root.style.setProperty("--accent-foreground", "#0a0a0b");
-    root.style.setProperty("--accent-soft", `${accent}26`); // ~15% alpha
+    root.style.setProperty("--accent-foreground", foreground);
+    root.style.setProperty("--accent-soft", toRgba(accent, 0.18));
+    root.style.setProperty("--color-accent", accent);
+    root.style.setProperty("--color-accent-foreground", foreground);
+    root.style.setProperty("--color-accent-soft", toRgba(accent, 0.18));
     try {
       localStorage.setItem(ACCENT_KEY, accent);
     } catch {}

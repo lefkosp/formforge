@@ -102,13 +102,22 @@ export default async function InputFieldPage() {
             controls: [
               { type: "text", name: "label", label: "Label" },
               { type: "text", name: "placeholder", label: "Placeholder" },
-              { type: "select", name: "type", label: "Type", options: [
-                { label: "Text", value: "text" },
-                { label: "Email", value: "email" },
-                { label: "Password", value: "password" },
-              ] },
+              {
+                type: "select",
+                name: "type",
+                label: "Type",
+                options: [
+                  { label: "Text", value: "text" },
+                  { label: "Email", value: "email" },
+                  { label: "Password", value: "password" },
+                ],
+              },
             ],
-            initialValues: { label: "Email", placeholder: "you@example.com", type: "email" },
+            initialValues: {
+              label: "Email",
+              placeholder: "you@example.com",
+              type: "email",
+            },
             renderId: "input-field",
           }}
         />

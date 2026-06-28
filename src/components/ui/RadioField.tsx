@@ -25,7 +25,7 @@ const RadioField: React.FC<RadioFieldProps> = ({ name, label, options, className
           <label key={opt.value} className="group inline-flex items-center gap-2 text-sm cursor-pointer">
             <span className="relative inline-flex items-center justify-center">
               <input type="radio" value={opt.value} {...register(name)} className="peer absolute inset-0 size-5 opacity-0 cursor-pointer" />
-              <span className="inline-flex size-5 items-center justify-center rounded-full border border-input bg-background shadow-sm transition-all duration-200 ease-in-out group-hover:ring-2 group-hover:ring-accent peer-focus-visible:ring-2 peer-focus-visible:ring-accent">
+              <span className="inline-flex size-5 items-center justify-center rounded-full border border-input bg-background shadow-sm transition-all duration-200 ease-in-out group-hover:border-accent group-hover:ring-2 group-hover:ring-accent/40 peer-focus-visible:ring-2 peer-focus-visible:ring-accent">
                 <span className="size-2.5 rounded-full bg-accent opacity-0 transition-opacity duration-150 peer-checked:opacity-100"></span>
               </span>
             </span>

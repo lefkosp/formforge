@@ -21,7 +21,10 @@ export function SelectFieldBasicExample() {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-4 w-80">
+      <form
+        onSubmit={methods.handleSubmit(onSubmit)}
+        className="space-y-4 w-80"
+      >
         <SelectField
           name="country"
           label="Country"

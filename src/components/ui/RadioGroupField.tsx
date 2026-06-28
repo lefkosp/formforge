@@ -16,7 +16,12 @@ interface RadioGroupFieldProps {
   className?: string;
 }
 
-const RadioGroupField = ({ name, label, options, className }: RadioGroupFieldProps) => {
+const RadioGroupField = ({
+  name,
+  label,
+  options,
+  className,
+}: RadioGroupFieldProps) => {
   const {
     register,
     formState: { errors },
@@ -26,10 +31,15 @@ const RadioGroupField = ({ name, label, options, className }: RadioGroupFieldPro
 
   return (
     <div className={cn("space-y-2", className)}>
-      <Label htmlFor={name} className={cn(error && "text-destructive")}>{label}</Label>
-      <div className="flex flex-wrap gap-3"> 
+      <Label htmlFor={name} className={cn(error && "text-destructive")}>
+        {label}
+      </Label>
+      <div className="flex flex-wrap gap-3">
         {options.map((opt) => (
-          <label key={opt.value} className="group inline-flex items-center gap-2 text-sm cursor-pointer">
+          <label
+            key={opt.value}
+            className="group inline-flex items-center gap-2 text-sm cursor-pointer"
+          >
             <span className="relative inline-flex items-center justify-center">
               <input
                 type="radio"
@@ -40,7 +50,7 @@ const RadioGroupField = ({ name, label, options, className }: RadioGroupFieldPro
               <span
                 className={cn(
                   "inline-flex size-5 items-center justify-center rounded-full border border-input bg-background shadow-sm transition-all duration-200 ease-in-out",
-                  "group-hover:ring-2 group-hover:ring-accent",
+                  "group-hover:border-accent group-hover:ring-2 group-hover:ring-accent/40",
                   "peer-focus-visible:ring-2 peer-focus-visible:ring-accent",
                   error && "ring-destructive"
                 )}
@@ -48,13 +58,13 @@ const RadioGroupField = ({ name, label, options, className }: RadioGroupFieldPro
                 <span className="size-2.5 rounded-full bg-accent opacity-0 transition-opacity duration-150 peer-checked:opacity-100" />
               </span>
             </span>
-            <span className={cn("leading-none", error && "text-destructive")}>{opt.label}</span>
+            <span className={cn("leading-none", error && "text-destructive")}>
+              {opt.label}
+            </span>
           </label>
         ))}
       </div>
-      {error && (
-        <p className="form-error-text">{error.message?.toString()}</p>
-      )}
+      {error && <p className="form-error-text">{error.message?.toString()}</p>}
     </div>
   );
 };

@@ -7,7 +7,8 @@ import { Label } from "./label";
 import { Button } from "./button";
 import { cn } from "@/lib/utils";
 
-interface PasswordFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface PasswordFieldProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   name: string;
   label: string;
 }
@@ -22,8 +23,16 @@ function computeStrength(value: string): { label: string; level: number } {
   return { label: labels[level] ?? "Very weak", level };
 }
 
-const PasswordField: React.FC<PasswordFieldProps> = ({ name, label, ...props }) => {
-  const { register, watch, formState: { errors } } = useFormContext();
+const PasswordField: React.FC<PasswordFieldProps> = ({
+  name,
+  label,
+  ...props
+}) => {
+  const {
+    register,
+    watch,
+    formState: { errors },
+  } = useFormContext();
   const error = (errors as Record<string, { message?: unknown }>)[name];
   const [visible, setVisible] = React.useState(false);
   const value: string = watch(name) ?? "";
@@ -31,13 +40,17 @@ const PasswordField: React.FC<PasswordFieldProps> = ({ name, label, ...props }) 
 
   return (
     <div className="space-y-2">
-      <Label htmlFor={name} className={cn(error && "text-destructive")}>{label}</Label>
+      <Label htmlFor={name} className={cn(error && "text-destructive")}>
+        {label}
+      </Label>
       <div className="relative">
         <Input
           id={name}
           type={visible ? "text" : "password"}
           aria-invalid={!!error}
-          className={cn(error && "border-destructive focus-visible:ring-destructive pr-16")}
+          className={cn(
+            error && "border-destructive focus-visible:ring-destructive pr-16"
+          )}
           {...register(name)}
           {...props}
         />
@@ -58,7 +71,9 @@ const PasswordField: React.FC<PasswordFieldProps> = ({ name, label, ...props }) 
       </div>
       <p className="text-xs text-muted-foreground">{strength.label}</p>
       {error && (
-        <p className="text-sm text-destructive animate-fade-in">{error.message?.toString()}</p>
+        <p className="text-sm text-destructive animate-fade-in">
+          {error.message?.toString()}
+        </p>
       )}
     </div>
   );

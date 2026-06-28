@@ -28,10 +28,15 @@ const AutocompleteField: React.FC<AutocompleteFieldProps> = ({
   placeholder,
   className,
 }) => {
-  const { control, formState: { errors } } = useFormContext();
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
   const error = (errors as Record<string, { message?: unknown }>)[name];
 
-  const [options, setOptions] = React.useState<AutocompleteOption[]>(optionsProp ?? []);
+  const [options, setOptions] = React.useState<AutocompleteOption[]>(
+    optionsProp ?? []
+  );
   const [query, setQuery] = React.useState("");
   const [open, setOpen] = React.useState(false);
   const containerRef = React.useRef<HTMLDivElement | null>(null);
@@ -44,7 +49,9 @@ const AutocompleteField: React.FC<AutocompleteFieldProps> = ({
         if (isMounted) setOptions(data);
       });
     }
-    return () => { isMounted = false; };
+    return () => {
+      isMounted = false;
+    };
   }, [fetchOptions]);
 
   React.useEffect(() => {
@@ -58,12 +65,20 @@ const AutocompleteField: React.FC<AutocompleteFieldProps> = ({
 
   const filtered = React.useMemo(() => {
     const q = query.toLowerCase();
-    return options.filter((o) => o.label.toLowerCase().includes(q) || o.value.toLowerCase().includes(q));
+    return options.filter(
+      (o) =>
+        o.label.toLowerCase().includes(q) || o.value.toLowerCase().includes(q)
+    );
   }, [options, query]);
 
   return (
     <div className={cn("space-y-2", className)} ref={containerRef}>
-      <Label htmlFor={`${name}-input`} className={cn(error && "text-destructive")}>{label}</Label>
+      <Label
+        htmlFor={`${name}-input`}
+        className={cn(error && "text-destructive")}
+      >
+        {label}
+      </Label>
 
       <Controller
         name={name}
@@ -83,14 +98,18 @@ const AutocompleteField: React.FC<AutocompleteFieldProps> = ({
               onBlur={onBlur}
               ref={ref}
               aria-invalid={!!error}
-              className={cn(error && "border-destructive focus-visible:ring-destructive")}
+              className={cn(
+                error && "border-destructive focus-visible:ring-destructive"
+              )}
             />
 
             {open && (
               <div className="absolute z-10 mt-1 w-full rounded-md border bg-card shadow">
                 <ul className="max-h-48 overflow-auto p-1">
                   {filtered.length === 0 && (
-                    <li className="px-3 py-2 text-sm text-muted-foreground">No results</li>
+                    <li className="px-3 py-2 text-sm text-muted-foreground">
+                      No results
+                    </li>
                   )}
                   {filtered.map((opt) => (
                     <li key={opt.value}>
@@ -116,7 +135,9 @@ const AutocompleteField: React.FC<AutocompleteFieldProps> = ({
       />
 
       {error && (
-        <p className="text-sm text-destructive animate-fade-in">{error.message?.toString()}</p>
+        <p className="text-sm text-destructive animate-fade-in">
+          {error.message?.toString()}
+        </p>
       )}
     </div>
   );

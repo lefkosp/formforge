@@ -19,12 +19,19 @@ interface MultiSelectFieldProps {
   className?: string;
 }
 
-const Chip: React.FC<{ children: React.ReactNode; onRemove?: () => void }>
-  = ({ children, onRemove }) => (
+const Chip: React.FC<{ children: React.ReactNode; onRemove?: () => void }> = ({
+  children,
+  onRemove,
+}) => (
   <span className="inline-flex items-center gap-1 rounded-full bg-accent text-accent-foreground px-2 py-1 text-xs">
     {children}
     {onRemove && (
-      <button type="button" className="ml-0.5 rounded-full p-0.5 hover:bg-accent/80 transition-colors" onClick={onRemove} aria-label="Remove">
+      <button
+        type="button"
+        className="ml-0.5 rounded-full p-0.5 hover:bg-accent/80 transition-colors"
+        onClick={onRemove}
+        aria-label="Remove"
+      >
         <X className="size-3" />
       </button>
     )}
@@ -37,7 +44,10 @@ const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
   options,
   className,
 }) => {
-  const { control, formState: { errors } } = useFormContext();
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
   const error = (errors as Record<string, { message?: unknown }>)[name];
 
   const [open, setOpen] = React.useState(false);
@@ -78,19 +88,24 @@ const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
             <div>
               <div
                 className={cn(
-                  "peer min-h-12 w-full rounded-md border border-border bg-background px-3 pt-5 pb-2 flex flex-wrap gap-2 cursor-text shadow-sm transition-all duration-200 ease-in-out",
-                  "focus-within:ring-2 focus-within:ring-accent focus-within:border-transparent hover:ring-2 hover:ring-accent/50",
-                  error && "border-destructive animate-shake focus-within:ring-destructive"
+                  "peer min-h-12 w-full rounded-md border border-input bg-background px-3 pt-5 pb-2 flex flex-wrap gap-2 cursor-text shadow-sm transition-all duration-200 ease-in-out",
+                  "focus-within:ring-2 focus-within:ring-accent focus-within:border-transparent hover:border-accent hover:ring-2 hover:ring-accent/40",
+                  error &&
+                    "border-destructive animate-shake focus-within:ring-destructive"
                 )}
                 onClick={() => setOpen((o) => !o)}
               >
                 {selected.length === 0 && (
-                  <span className="text-sm text-muted-foreground italic">Select options</span>
+                  <span className="text-sm text-muted-foreground italic">
+                    Select options
+                  </span>
                 )}
                 {selected.map((v) => {
                   const opt = options.find((o) => o.value === v);
                   return (
-                    <Chip key={v} onRemove={() => toggle(v)}>{opt?.label ?? v}</Chip>
+                    <Chip key={v} onRemove={() => toggle(v)}>
+                      {opt?.label ?? v}
+                    </Chip>
                   );
                 })}
               </div>
@@ -107,9 +122,22 @@ const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
                             onClick={() => toggle(opt.value)}
                             className="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground transition-colors rounded"
                           >
-                            <span className={"relative inline-flex items-center justify-center"}>
-                              <span className={"inline-flex size-4 items-center justify-center rounded-[4px] border border-input bg-background shadow-sm"}>
-                                <Check className={cn("size-3", isChecked ? "opacity-100" : "opacity-0")}/>
+                            <span
+                              className={
+                                "relative inline-flex items-center justify-center"
+                              }
+                            >
+                              <span
+                                className={
+                                  "inline-flex size-4 items-center justify-center rounded-[4px] border border-input bg-background shadow-sm"
+                                }
+                              >
+                                <Check
+                                  className={cn(
+                                    "size-3",
+                                    isChecked ? "opacity-100" : "opacity-0"
+                                  )}
+                                />
                               </span>
                             </span>
                             <span>{opt.label}</span>
@@ -125,9 +153,7 @@ const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
         }}
       />
 
-      {error && (
-        <p className="form-error-text">{error.message?.toString()}</p>
-      )}
+      {error && <p className="form-error-text">{error.message?.toString()}</p>}
     </div>
   );
 };

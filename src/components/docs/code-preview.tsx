@@ -13,6 +13,7 @@ interface CodePreviewProps {
   tsxCode: string;
   zodSchema: string;
   className?: string;
+  showPreview?: boolean;
   playground?: {
     controls: ControlSpec[];
     initialValues: Record<string, unknown>;
@@ -25,6 +26,7 @@ export function CodePreview({
   tsxCode,
   zodSchema,
   className,
+  showPreview = true,
   playground,
 }: CodePreviewProps) {
   const [copied, setCopied] = useState<string | null>(null);
@@ -107,21 +109,25 @@ export function CodePreview({
   return (
     <div className={cn("space-y-4", className)}>
       {/* Live Component Preview */}
-      <div className="rounded-lg border bg-card p-6">
-        <div className="mb-4 flex flex-col items-center justify-between gap-3">
-          <h3 className="text-sm font-medium text-muted-foreground">Preview</h3>
-          {playground && (
-            <div className="w-64">
-              <PlaygroundControls
-                controls={playground.controls}
-                values={pgValues}
-                onChange={setPgValues}
-              />
-            </div>
-          )}
+      {showPreview && (
+        <div className="rounded-lg border bg-card p-6">
+          <div className="mb-4 flex flex-col items-center justify-between gap-3">
+            <h3 className="text-sm font-medium text-muted-foreground">
+              Preview
+            </h3>
+            {playground && (
+              <div className="w-64">
+                <PlaygroundControls
+                  controls={playground.controls}
+                  values={pgValues}
+                  onChange={setPgValues}
+                />
+              </div>
+            )}
+          </div>
+          <div className="flex justify-center">{rendered}</div>
         </div>
-        <div className="flex justify-center">{rendered}</div>
-      </div>
+      )}
 
       {/* Code Tabs */}
       <div className="rounded-lg border bg-card shadow-sm">

@@ -18,15 +18,34 @@ export default function GettingStartedPage() {
         <div className="prose prose-gray dark:prose-invert max-w-none">
           <h2>Installation</h2>
           <p>
-            FormForge requires React 18+ and works best with TypeScript. Install
-            the required dependencies:
+            FormForge is a copy-paste component library (like shadcn/ui), not an
+            npm package yet. Clone the repo, install the docs app dependencies,
+            then copy the components you need into your project.
+          </p>
+
+          <pre className="bg-muted p-4 rounded-lg overflow-x-auto">
+            <code>{`git clone https://github.com/lefkosp/formforge.git
+cd formforge
+npm install`}</code>
+          </pre>
+
+          <p>
+            In your own React app, install the peer dependencies FormForge
+            components expect:
           </p>
 
           <pre className="bg-muted p-4 rounded-lg overflow-x-auto">
             <code>
-              npm install formforge react-hook-form @hookform/resolvers zod
+              npm install react-hook-form @hookform/resolvers zod class-variance-authority clsx tailwind-merge
             </code>
           </pre>
+
+          <p>
+            Copy field components from{" "}
+            <code>src/components/ui/</code> into your project, along with any
+            Radix primitives they import. Each docs page includes a live preview
+            and copyable example.
+          </p>
 
           <h2>Basic Setup</h2>
           <p>Import and use FormForge components in your React application:</p>
@@ -78,8 +97,8 @@ export default function MyForm() {
 
           <h2>Next Steps</h2>
           <p>
-            Now that you have FormForge installed, explore the components in the
-            sidebar to see all available form fields and their configurations.
+            Browse the components in the sidebar, try the visual form builder,
+            and copy the examples into your app.
           </p>
         </div>
       </div>

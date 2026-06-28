@@ -21,8 +21,15 @@ export function TextareaFieldBasicExample() {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-4 w-80">
-        <TextareaField name="bio" label="Bio" placeholder="Tell us about yourself..." />
+      <form
+        onSubmit={methods.handleSubmit(onSubmit)}
+        className="space-y-4 w-80"
+      >
+        <TextareaField
+          name="bio"
+          label="Bio"
+          placeholder="Tell us about yourself..."
+        />
         <button
           type="submit"
           className="form-button form-button-primary w-full"
